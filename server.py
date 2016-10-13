@@ -1,10 +1,37 @@
 import web
-from commands import *
+#from commands import *
 import urllib
 import os
 from os import listdir
 from os import walk
 import glob
+import serial
+
+def clrScr():
+    ser = serial.Serial('/dev/ttyUSB0')
+    ser.write('\xFE')
+    ser.write('\x01')
+    ser.close
+
+def printText(text):
+    ser = serial.Serial('/dev/ttyUSB0')
+    ser.write(text)
+    ser.close
+
+def cursorMov(x,y):
+    ser = serial.Serial('/dev/ttyUSB0')
+    if y == 0:
+        pass
+    elif y == 1:
+        y = 40
+    elif y == 2:
+        y = 20
+    elif y == 3:
+        y = 60
+    z = chr((128 + x) +  y)
+    ser.write('\xFE')
+    ser.write(z)
+    ser.close
 
 urls = (
     '/', 'index'
@@ -31,6 +58,9 @@ class index:
             print "fname = %s" % fname
             if fname == referer:
                     fname = fname.replace("$", "\$")
+                    clrScr()
+                    #cursorMov(0, 1)
+                    printText(fname)
                     os.system('mpg123 "./mp3s/%s"' % fname)
        return song
       # greeting = "Hello World"
