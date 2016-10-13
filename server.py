@@ -57,11 +57,11 @@ class index:
             fname = fname.replace("./mp3s/", "")
             print "fname = %s" % fname
             if fname == referer:
-                    fname = fname.replace("$", "\$")
+                    #fname = fname.replace("$", "\$")
                     clrScr()
                     #cursorMov(0, 1)
                     printText(fname)
-                    os.system('mpg123 "./mp3s/%s"' % fname)
+                    os.system('mpg123 "./mp3s/%s"' % fname.replace("$", "\$"))
        return song
       # greeting = "Hello World"
       # return greeting
